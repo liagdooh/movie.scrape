@@ -4,7 +4,7 @@ import { Plugin, PluginOptions, PluginResponse } from "../src/core/Plugin";
  * Getting sources from https://www.theflix.to/
  * @author Hoodgail Benjamin
  */
-export default class TheFlixSource extends Plugin {
+export default class TheFlix extends Plugin {
 
    /**
     * The website's api next build id
