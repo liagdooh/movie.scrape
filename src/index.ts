@@ -1,3 +1,4 @@
+import I123Movies1 from "../native/123Movies1";
 import Gdrive from "../native/Gdrive";
 import TheFlix from "../native/TheFlix";
 import { Plugin, PluginOptions, PluginResponse } from "./core/Plugin";
@@ -32,8 +33,9 @@ export default class PluginResgistry extends Map<string, NativePluginsMap[keyof 
    constructor() {
       super()
 
+      this.set("1231", new I123Movies1);
       this.set("gdrive", new Gdrive);
-      this.set("flix", new TheFlix)
+      this.set("flix", new TheFlix);
    }
 
    /** Returns an array of all of the registered plugins */

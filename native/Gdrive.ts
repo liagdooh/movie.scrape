@@ -3,6 +3,21 @@ import { URLResolve } from "../src/core/Util";
 
 export class GdriveRefs {
 
+   public static async DoodStream(href: string): Promise<string> {
+      let url = new URL(URLResolve(href));
+
+      /** Fetches the raw text data. */
+      let text = await fetch(url.toString()).then((e: Response) => e.text());
+
+      /** Parses the html text to a DOM document */
+      const document = new DOMParser().parseFromString(text, "text/html")
+
+      /** Gets the anchor with the download link */
+      let a: HTMLAnchorElement = document.querySelector(".download-content a");
+
+      if (a && a.getAttribute("href")) return a.getAttribute("href");
+   }
+
    public static async SbPlay(href: string): Promise<string> {
       let url = new URL(URLResolve(href));
 
@@ -74,8 +89,16 @@ export class GdriveRefs {
       /** The DoomSream download link anchor */
       let dood = list.find(a => a.textContent.includes("DoodStream"));
 
-      if (sb && sb.getAttribute('href'))
-         return await GdriveRefs.SbPlay(sb.getAttribute('href'));
+      if (sb && sb.getAttribute('href')) {
+         let src = await GdriveRefs.SbPlay(sb.getAttribute('href'));
+         if (src !== null) return src;
+      }
+
+
+      if (dood && dood.getAttribute('href')) {
+         let src = await GdriveRefs.DoodStream(dood.getAttribute('href'));
+         if (src !== null) return src;
+      }
 
       return null
    }
